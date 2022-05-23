@@ -16,7 +16,17 @@ ScoreState = Class{__includes = BaseState}
 ]]
 function ScoreState:enter(params)
     self.score = params.score
-    self.medal = Medal('bronze')
+    local name
+    
+    if params.score <= 5 then
+        name = 'bronze'
+    elseif params.score <= 8 then
+        name = 'silver'
+    else
+        name = 'golden'
+    end
+
+    self.medal = Medal(name)
 end
 
 function ScoreState:update(dt)
