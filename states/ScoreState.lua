@@ -16,6 +16,7 @@ ScoreState = Class{__includes = BaseState}
 ]]
 function ScoreState:enter(params)
     self.score = params.score
+    self.medal = Medal('bronze')
 end
 
 function ScoreState:update(dt)
@@ -34,4 +35,6 @@ function ScoreState:render()
     love.graphics.printf('Score: ' .. tostring(self.score), 0, 100, VIRTUAL_WIDTH, 'center')
 
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
+
+    self.medal:render()
 end
