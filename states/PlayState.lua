@@ -105,11 +105,16 @@ function PlayState:update(dt)
     end
 
     if love.keyboard.wasPressed('P') or love.keyboard.wasPressed('p') then
-        gStateMachine:change('pause')
+        self.paused = self.paused == false -- Toogle the self.paused boolean
     end
 end
 
 function PlayState:render()
+    if self.paused then
+        love.graphics.setFont(flappyFont)
+        love.graphics.printf("||", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+    end 
+
     for k, pair in pairs(self.pipePairs) do
         pair:render()
     end

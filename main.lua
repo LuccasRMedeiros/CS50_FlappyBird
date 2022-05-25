@@ -38,7 +38,6 @@ require 'states/CountdownState'
 require 'states/PlayState'
 require 'states/ScoreState'
 require 'states/TitleScreenState'
-require 'states/PauseState'
 
 require 'Bird'
 require 'Pipe'
