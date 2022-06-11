@@ -19,9 +19,9 @@ function ScoreState:enter(params)
     local name
     
     if params.score > 1 then
-        if params.score <= 5 then
+        if params.score <= 2 then
             name = 'bronze'
-        elseif params.score <= 8 then
+        elseif params.score <= 3 then
             name = 'silver'
         else
             name = 'golden'

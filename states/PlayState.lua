@@ -111,6 +111,12 @@ function PlayState:update(dt)
         
         self.paused = self.paused == false -- Toogle the self.paused boolean
         PLAYING = self.paused == false -- When self.paused id equal to true, PLAYING will be false and vice versa
+
+        if self.paused then -- If the game is paused, pauses the music
+            sounds['music']:pause()
+        else
+            sounds['music']:play()
+        end
     end
 end
 

@@ -83,9 +83,6 @@ function love.load()
     hugeFont = love.graphics.newFont('flappy.ttf', 56)
     love.graphics.setFont(flappyFont)
 
-    -- initialize the pause icon
-    pauseIcon = love.graphics.newImage('pauseicon.png')
-
     -- initialize our table of sounds
     sounds = {
         ['jump'] = love.audio.newSource('jump.wav', 'static'),
