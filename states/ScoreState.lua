@@ -18,15 +18,17 @@ function ScoreState:enter(params)
     self.score = params.score
     local name
     
-    if params.score <= 5 then
-        name = 'bronze'
-    elseif params.score <= 8 then
-        name = 'silver'
-    else
-        name = 'golden'
-    end
+    if params.score > 1 then
+        if params.score <= 5 then
+            name = 'bronze'
+        elseif params.score <= 8 then
+            name = 'silver'
+        else
+            name = 'golden'
+        end
 
-    self.medal = Medal(name)
+        self.medal = Medal(name)
+    end
 end
 
 function ScoreState:update(dt)
@@ -46,5 +48,7 @@ function ScoreState:render()
 
     love.graphics.printf('Press Enter to Play Again!', 0, 160, VIRTUAL_WIDTH, 'center')
 
-    self.medal:render()
+    if self.medal then -- If there is a medal object renders it
+        self.medal:render()
+    end
 end

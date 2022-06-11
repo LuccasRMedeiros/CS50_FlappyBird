@@ -23,7 +23,9 @@ function PlayState:init()
     self.timer = 0
     self.score = 0
     self.spawnLimit = 2
-
+    self.pauseIcon = love.graphics.newImage('pauseicon.png')
+    self.paused = false
+    
     -- initialize our last recorded Y value for a gap placement to base other gaps off of
     self.lastY = -PIPE_HEIGHT + math.random(80) + 20
 end
@@ -33,7 +35,7 @@ function PlayState:update(dt)
     self.timer = self.timer + dt
 
     -- spawn a new pipe pair every second and a half
-    if self.timer > self.spawnLimit then
+    if self.timer > self.spawnLimit and PLAYING then
         -- modify the last Y coordinate we placed so pipe gaps aren't too far apart
         -- no higher than 10 pixels below the top edge of the screen,
         -- and no lower than a gap length (90 pixels) from the bottom
@@ -105,14 +107,16 @@ function PlayState:update(dt)
     end
 
     if love.keyboard.wasPressed('P') or love.keyboard.wasPressed('p') then
+        sounds['pause']:play()
+        
         self.paused = self.paused == false -- Toogle the self.paused boolean
+        PLAYING = self.paused == false -- When self.paused id equal to true, PLAYING will be false and vice versa
     end
 end
 
 function PlayState:render()
     if self.paused then
-        love.graphics.setFont(flappyFont)
-        love.graphics.printf("||", 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+        love.graphics.setFont(hugeFont)
     end 
 
     for k, pair in pairs(self.pipePairs) do
@@ -122,7 +126,11 @@ function PlayState:render()
     love.graphics.setFont(flappyFont)
     love.graphics.print('Score: ' .. tostring(self.score), 8, 8)
 
-    self.bird:render()
+    if PLAYING then
+        self.bird:render()
+    else
+        love.graphics.draw(self.pauseIcon, VIRTUAL_WIDTH / 2 - 16, VIRTUAL_HEIGHT / 2 - 16)
+    end
 end
 
 --[[
@@ -130,7 +138,7 @@ end
 ]]
 function PlayState:enter()
     -- if we're coming from death, restart scrolling
-    scrolling = true
+    PLAYING = true
 end
 
 --[[
@@ -138,5 +146,5 @@ end
 ]]
 function PlayState:exit()
     -- stop scrolling for the death/score screen
-    scrolling = false
+    PLAYING = false
 end
